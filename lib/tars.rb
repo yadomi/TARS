@@ -1,5 +1,5 @@
-require "tars/version"
-require "tars/api"
+require 'tars/version'
+require 'tars/api'
 
 module TARS
   class << self
