@@ -1,6 +1,4 @@
 require 'webrick'
-require 'pp'
-
 require 'tars/update'
 
 module TARS
