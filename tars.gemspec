@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Felix Yadomi"]
   spec.email         = ["felix.yadomi@gmail.com"]
 
-  spec.summary       = %q{API Wrapper for Telegram Bots}
+  spec.summary       = %q{Telegram Bot API Wrapper with webhook support}
   spec.homepage      = "http://github.com/yadomi/TARS"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
