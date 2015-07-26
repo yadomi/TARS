@@ -1,20 +1,45 @@
 require 'webrick'
+require 'pp'
+
+require 'tars/update'
 
 module TARS
   class PostHandler < WEBrick::HTTPServlet::AbstractServlet
-    def do_POST request, response
+    def do_POST(request, response)
+      parsed = parse(request.body)
+      TARS::Update.new(parsed)
       response.status = 200
-      response['Content-Type'] = 'text/plain'
-      response.body = 'Hello, World!'
+    end
+
+    def parse(update)
+      JSON.parse(update)
+    end
+  end
+
+  class Server
+    def initialize
+      server = WEBrick::HTTPServer.new Port: TARS.config.server[:port]
+      server.mount TARS.config.server[:path], TARS::PostHandler
+      server.start
     end
   end
 
   class Bot
+    class << self
+      attr_accessor :cmds
+    end
+
     def initialize
-      @server = WEBrick::HTTPServer.new Port: TARS.config.server[:port]
-      @server.mount TARS.config.server[:path], TARS::PostHandler
-      trap 'INT' do @server.shutdown end
-      @server.start
+      @cmds = {}
+    end
+
+    def on(message, &block)
+      @cmds[message] = block
+    end
+
+    def execute(command, message)
+      return unless @cmds.key?(command)
+      @cmds[command].call(message)
     end
   end
 end
