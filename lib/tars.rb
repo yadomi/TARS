@@ -1,16 +1,17 @@
 require "tars/version"
+require "tars/api"
 
 module TARS
   class << self
-    attr_accessor :setup
+    attr_accessor :config
   end
 
-  class Setup
+  class Configurator
     attr_accessor :token
   end
 
-  def self.setup
-    self.setup ||= Setup.new
-    yield setup
+  def self.configure
+    self.config ||= Configurator.new
+    yield config
   end
 end
