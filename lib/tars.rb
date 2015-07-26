@@ -1,10 +1,11 @@
 require 'tars/version'
 require 'tars/api'
+require 'tars/update'
 require 'tars/bot'
 
 module TARS
   class << self
-    attr_accessor :config
+    attr_accessor :config, :bot
   end
 
   class Configurator
@@ -14,16 +15,17 @@ module TARS
   def self.configure
     self.config ||= Configurator.new
     yield config
+    @bot = TARS::Bot.new
   end
 
   def self.bootstrap
     me = TARS::API.me
-    puts me
 
-    puts "Setting Bot webhook to #{TARS.config.webhook} ..."
+    puts "Setting webhook for Bot to #{TARS.config.webhook} ..."
     TARS::API.webhook
 
     puts 'Running local server..'
-    TARS::Bot.new
+
+    TARS::Server.new
   end
 end
