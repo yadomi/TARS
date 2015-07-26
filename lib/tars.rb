@@ -7,7 +7,7 @@ module TARS
   end
 
   class Configurator
-    attr_accessor :token
+    attr_accessor :token, :webhook
   end
 
   def self.configure
