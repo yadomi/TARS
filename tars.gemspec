@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'tars/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "TARS"
+  spec.name          = "tars"
   spec.version       = TARS::VERSION
   spec.authors       = ["Felix Yadomi"]
   spec.email         = ["felix.yadomi@gmail.com"]
