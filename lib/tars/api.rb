@@ -14,8 +14,14 @@ module TARS
       request 'getUpdates'
     end
 
-    def self.request(endpoint)
-      post("/bot#{TARS.config.token}/#{endpoint}")
+    def self.webhook
+      # TARS.config.webhook[:scheme] = 'https'
+      request 'setWebhook', url: URI::HTTPS.build(TARS.config.webhook)
+    end
+
+    def self.request(endpoint, options = {})
+      p options
+      post("/bot#{TARS.config.token}/#{endpoint}", query: options)
     end
     private_class_method :request
   end
