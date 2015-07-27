@@ -3,6 +3,8 @@ require 'tars/api'
 require 'tars/update'
 require 'tars/bot'
 
+require 'daemons'
+
 module TARS
   class << self
     attr_accessor :config, :bot
@@ -19,11 +21,11 @@ module TARS
   end
 
   def self.bootstrap
-    puts "Setting webhook for Bot to #{TARS.config.webhook} ..."
+    puts "Setting webhook for Bot to #{TARS.config.webhook}"
     TARS::API.webhook
 
-    puts 'Running local server..'
-
+    puts 'Forking TARS in background'
+    Daemons.daemonize
     TARS::Server.new
   end
 end
