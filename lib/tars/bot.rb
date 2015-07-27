@@ -15,10 +15,23 @@ module TARS
   end
 
   class Server
+
+    class << self
+      attr_reader :server
+    end
+
     def initialize
-      server = WEBrick::HTTPServer.new TARS.config.server
-      server.mount TARS.config.server['Path'], TARS::PostHandler
-      server.start
+      @server = WEBrick::HTTPServer.new server_config
+      @server.mount TARS.config.server['Path'], TARS::PostHandler
+    end
+
+    def server_config
+      dev_null = WEBrick::Log.new('/dev/null', 7)
+      { Logger: dev_null, AccessLog: dev_null }.merge(TARS.config.server)
+    end
+
+    def run!
+      @server.start
     end
   end
 
@@ -31,13 +44,14 @@ module TARS
       @cmds = {}
     end
 
-    def on(message, &block)
-      @cmds[message] = block
+    def on(command, &block)
+      @cmds[command] = block
     end
 
-    def execute(command, message)
+    def execute(command, update)
       return unless @cmds.key?(command)
-      @cmds[command].call(message)
+      message = update.instance_variable_get('@message')
+      @cmds[command].call(message, message['chat']['id'])
     end
   end
 end

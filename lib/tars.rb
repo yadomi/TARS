@@ -3,15 +3,20 @@ require 'tars/api'
 require 'tars/update'
 require 'tars/bot'
 
-require 'daemons'
+require 'logger'
 
 module TARS
   class << self
-    attr_accessor :config, :bot
+    attr_accessor :config, :bot, :logger
   end
 
   class Configurator
-    attr_accessor :token, :webhook, :server
+    attr_accessor :token, :webhook, :server, :verbose, :logfile
+
+    def initialize
+      @verbose = true
+      @logfile = '/var/log/tars.log'
+    end
   end
 
   def self.configure
@@ -21,11 +26,18 @@ module TARS
   end
 
   def self.bootstrap
-    puts "Setting webhook for Bot to #{TARS.config.webhook}"
+    @logger = Logger.new(self.config.logfile)
+
+    log "Setting webhook for Bot to #{TARS.config.webhook}"
     TARS::API.webhook
 
-    puts 'Forking TARS in background'
-    Daemons.daemonize
-    TARS::Server.new
+    log 'Launch TARS server'
+    server = TARS::Server.new
+    server.run!
+  end
+
+  def self.log(message, level = :info)
+    puts message if TARS.config.verbose
+    logger.send(level, message)
   end
 end
