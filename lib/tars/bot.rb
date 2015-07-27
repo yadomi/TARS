@@ -16,8 +16,8 @@ module TARS
 
   class Server
     def initialize
-      server = WEBrick::HTTPServer.new Port: TARS.config.server[:port]
-      server.mount TARS.config.server[:path], TARS::PostHandler
+      server = WEBrick::HTTPServer.new TARS.config.server
+      server.mount TARS.config.server['Path'], TARS::PostHandler
       server.start
     end
   end
