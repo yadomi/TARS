@@ -15,14 +15,13 @@ module TARS
   end
 
   class Server
-
     class << self
       attr_reader :server
     end
 
     def initialize
-      @server = WEBrick::HTTPServer.new TARS.config.server
-      @server.mount TARS.config.server['Path'], TARS::PostHandler
+      @server = WEBrick::HTTPServer.new Port: TARS.config.server[:port]
+      @server.mount TARS.config.server[:path], TARS::PostHandler
     end
 
     def run!
