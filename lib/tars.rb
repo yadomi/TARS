@@ -7,11 +7,11 @@ require 'logger'
 
 module TARS
   class << self
-    attr_accessor :config, :bot, :logger
+    attr_accessor :config, :bot
   end
 
   class Configurator
-    attr_accessor :token, :webhook, :server, :verbose, :logfile
+    attr_accessor :token, :webhook, :server
   end
 
   def self.configure
