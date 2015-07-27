@@ -19,8 +19,6 @@ module TARS
   end
 
   def self.bootstrap
-    me = TARS::API.me
-
     puts "Setting webhook for Bot to #{TARS.config.webhook} ..."
     TARS::API.webhook
 
