@@ -12,11 +12,6 @@ module TARS
 
   class Configurator
     attr_accessor :token, :webhook, :server, :verbose, :logfile
-
-    def initialize
-      @verbose = true
-      @logfile = '/var/log/tars.log'
-    end
   end
 
   def self.configure
@@ -26,18 +21,11 @@ module TARS
   end
 
   def self.bootstrap
-    @logger = Logger.new(self.config.logfile)
-
-    log "Setting webhook for Bot to #{TARS.config.webhook}"
+    puts "Setting webhook for Bot to #{TARS.config.webhook}"
     TARS::API.webhook
 
-    log 'Launch TARS server'
+    puts 'Launch TARS server'
     server = TARS::Server.new
     server.run!
-  end
-
-  def self.log(message, level = :info)
-    puts message if TARS.config.verbose
-    logger.send(level, message)
   end
 end
