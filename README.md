@@ -46,13 +46,13 @@ TARS.bootstrap
 ## Checklist 
 
 - [x] Create a check list 
-- [] Write documentation 
-- [] Add option to deamonize/fork in backgrounds 
-- [] Handle telegram API errors 
-- [] Allow to pass a RegEx to `on` as first parameter
-- [] Implement a Logger 
-- [] Clean WEBrick output to stdout 
-- [] Colored output 
+- [ ] Write documentation 
+- [ ] Add option to deamonize/fork in backgrounds 
+- [ ] Handle telegram API errors 
+- [ ] Allow to pass a RegEx to `on` as first parameter
+- [ ] Implement a Logger 
+- [ ] Clean WEBrick output to stdout 
+- [ ] Colored output 
 
 ## Contributing
 
