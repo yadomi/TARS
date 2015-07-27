@@ -21,13 +21,8 @@ module TARS
     end
 
     def initialize
-      @server = WEBrick::HTTPServer.new server_config
+      @server = WEBrick::HTTPServer.new TARS.config.server
       @server.mount TARS.config.server['Path'], TARS::PostHandler
-    end
-
-    def server_config
-      dev_null = WEBrick::Log.new('/dev/null', 7)
-      { Logger: dev_null, AccessLog: dev_null }.merge(TARS.config.server)
     end
 
     def run!
